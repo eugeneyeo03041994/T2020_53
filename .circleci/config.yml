@@ -1,0 +1,55 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2.1
+
+defaults: &config_project_defaults
+  working_directory: ~/repo
+
+executors:
+  node_default:
+    docker:
+      - image: circleci/node:lts
+
+jobs:
+  webapp_build_deploy:
+    <<: *config_project_defaults
+    executor: node_default
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}-{{ .Revision }}
+            - v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - v1-{{ arch }}-{{ .Branch }}
+            - v1-{{ arch }}
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}-{{ .Revision }}
+      - run:
+          name: Build optimized React App
+          command: npm run build
+          filters:
+            branches:
+              only:
+                - master
+      - run:
+          name: Publish to firebase
+          command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN
+          filters:
+            branches:
+              only:
+                - master
+
+workflows:
+  version: 2
+  master_flow:
+    jobs:
+      - webapp_build_deploy:
+          filters:
+            branches:
+              only:
+                - master
