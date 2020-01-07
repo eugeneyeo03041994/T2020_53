@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import axios from "axios";
 import rateLimit from "axios-rate-limit";
 
-const dbs = rateLimit(axios.create({
+export const dbs = rateLimit(axios.create({
     baseURL: "http://techtrek-api-gateway.ap-southeast-1.elasticbeanstalk.com/",
     headers: {
         "Identity": "T2",

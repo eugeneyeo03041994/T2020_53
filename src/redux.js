@@ -27,7 +27,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
             if (window && window.localStorage) {
                 window.localStorage.clear();
             }
-            return INITIAL_STATE;
+            return {user: null};
         }
     };
     if (!!action.type && !!reducerMap[action.type]) {
