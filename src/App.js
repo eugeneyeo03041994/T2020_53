@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from './dbslogo.png';
 import "semantic-ui-css/semantic.css";
 import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
@@ -20,7 +20,7 @@ class App extends React.Component {
                         <div style={{height: '100%'}}>
                             <ScrollToTop>
                                 <div className="ui top menu">
-                                    <Link to="/" className="item"><img src={logo}/></Link>
+                                    <Link to="/" className="item"><img src={logo} alt="Home"/></Link>
                                     {!!this.props.user && <Link to="/Personal" className="item">Personal</Link>}
                                     {!!this.props.user && <Link to="/SignOut" className="item float right">Log Out</Link>}
                                     {!this.props.user && <Link to="/SignIn" className="item float right">Log in</Link>}

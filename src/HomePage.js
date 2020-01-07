@@ -163,10 +163,10 @@ class HomePage extends React.Component {
                             this.state.recommendedCards.map(card =>
                                 <div key={card.name} className="ui card">
                                     <div className="image">
-                                        <img src={card.image}/>
+                                        <img src={card.image} alt={card.name}/>
                                     </div>
                                     <div className="content">
-                                        <a className="header">{card.name}</a>
+                                        <p className="header">{card.name}</p>
                                         <div className="description">
                                             Rebates:
                                             <ul>
