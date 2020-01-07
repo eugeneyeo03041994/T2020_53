@@ -11,6 +11,9 @@
     "react-scripts": "3.3.0",
     "semantic-ui-css": "^2.4.1"
   },
+  "devDependencies": {
+    "firebase-tools": "^7.5.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
