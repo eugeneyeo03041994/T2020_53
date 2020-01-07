@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import "semantic-ui-css/semantic.css";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import ScrollToTop from "./ScrollToTop";
 import SignInPage from "./SignInPage";
@@ -9,6 +9,7 @@ import HomePage from "./HomePage";
 import SignOutPage from "./SignOutPage";
 import PersonalPage from "./PersonalPage";
 import NotFoundPage from "./NotFoundPage";
+import {connect} from "react-redux";
 
 class App extends React.Component {
     render() {
@@ -19,12 +20,10 @@ class App extends React.Component {
                         <div style={{height: '100%'}}>
                             <ScrollToTop>
                                 <div className="ui top menu">
-                                    <div className="item">
-                                        <img src={logo}/>
-                                    </div>
-                                    <a className="item float right">Features</a>
-                                    <a className="item">Testimonials</a>
-                                    <a className="item">Log in</a>
+                                    <Link to="/" className="item"><img src={logo}/></Link>
+                                    {!!this.props.user && <Link to="/Personal" className="item">Personal</Link>}
+                                    {!!this.props.user && <Link to="/SignOut" className="item float right">Log Out</Link>}
+                                    {!this.props.user && <Link to="/SignIn" className="item float right">Log in</Link>}
                                 </div>
                                 <TransitionGroup className="bg-light">
                                     <CSSTransition
@@ -51,10 +50,8 @@ class App extends React.Component {
     }
 }
 
-const MyComponent = () => (
-    <h1 className="ui dividing header">
-        Hello there
-    </h1>
-);
+const mapStateToProps = (state) => ({
+    user: state.appState.user
+});
 
-export default App;
+export default connect(mapStateToProps)(App);
